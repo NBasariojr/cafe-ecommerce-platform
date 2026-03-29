@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+.expo/
+release/
+
+# Generated files
+pnpm-lock.yaml
+*.tsbuildinfo
+
+# Docker
+docker/data/
+
+# Coverage
+coverage/

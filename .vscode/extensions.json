@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "ms-vscode.vscode-typescript-next",
+    "bradlc.vscode-tailwindcss",
+    "christian-kohler.path-intellisense",
+    "streetsidesoftware.code-spell-checker",
+    "mikestead.dotenv",
+    "ms-azuretools.vscode-docker",
+    "eamodio.gitlens"
+  ]
+}

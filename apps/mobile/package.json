@@ -1,0 +1,25 @@
+{
+  "name": "@cafe/mobile",
+  "version": "0.0.1",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "build": "expo export",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@cafe/shared": "workspace:*",
+    "expo": "~50.0.6",
+    "react": "18.2.0",
+    "react-native": "0.73.4"
+  },
+  "devDependencies": {
+    "@types/react": "~18.2.48",
+    "typescript": "5.3.3"
+  }
+}
