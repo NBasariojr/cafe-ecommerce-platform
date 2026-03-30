@@ -2,18 +2,17 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
+    "target":           "ES2022",
+    "module":           "ESNext",
     "moduleResolution": "Bundler",
-    "jsx": "react-jsx",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "baseUrl": ".",
+    "jsx":              "react-jsx",
+    "noEmit":           true,
+    "baseUrl":          ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@shared/*": ["../../packages/shared/src/*"],
+      "@/*":          ["./src/*"],
+      "@shared/*":    ["../../packages/shared/src/*"],
       "@cafe/shared": ["../../packages/shared/src/index.ts"],
-      "@cafe/ui": ["../../packages/ui/src/index.ts"]
+      "@cafe/ui":     ["../../packages/ui/src/index.ts"]
     }
   },
   "include": ["src/**/*", "vite.config.ts"],

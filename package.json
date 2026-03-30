@@ -9,20 +9,20 @@
     "pnpm": ">=8.0.0"
   },
   "scripts": {
-    "build": "pnpm -r run build",
-    "test": "pnpm -r run test",
-    "lint": "pnpm -r run lint",
-    "typecheck": "pnpm -r run typecheck",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yaml,yml}\" --ignore-path .gitignore",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore",
-    "clean": "pnpm -r exec rm -rf dist build .turbo node_modules/.cache"
+    "build":          "pnpm -r run build",
+    "test":           "pnpm -r run test",
+    "lint":           "pnpm -r run lint",
+    "typecheck":      "pnpm -r run typecheck",
+    "format":         "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yaml,yml}\" --ignore-path .gitignore",
+    "format:check":   "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore",
+    "clean":          "pnpm -r exec rm -rf dist build .turbo node_modules/.cache"
   },
   "devDependencies": {
-    "@eslint/js": "^9.5.0",
-    "eslint": "^9.5.0",
-    "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.2.5",
-    "typescript": "5.3.3",
-    "typescript-eslint": "^7.13.0"
+    "@eslint/js":                        "^9.5.0",
+    "eslint":                            "^9.5.0",
+    "eslint-config-prettier":            "^9.1.0",
+    "prettier":                          "^3.2.5",
+    "typescript":                        "5.3.3",
+    "typescript-eslint":                 "^7.13.0"
   }
 }
