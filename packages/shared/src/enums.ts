@@ -1,7 +1,3 @@
-// All string enums for the cafe platform.
-// String enums serialize to readable values in JSON responses.
-// Import from "@cafe/shared" - never from subpaths.
-
 export enum OrderStatus {
   PENDING   = "PENDING",
   CONFIRMED = "CONFIRMED",
