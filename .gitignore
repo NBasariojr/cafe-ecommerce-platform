@@ -10,7 +10,7 @@ out/
 .expo/
 release/
 
-# Environment files — NEVER commit
+# Environment files
 .env
 .env.*
 !.env.example
