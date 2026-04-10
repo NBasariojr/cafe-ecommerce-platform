@@ -1,3 +1,4 @@
+import "dotenv/config"
 import { createApp } from "./app"
 import { connectDB, disconnectDB } from "./config/database"
 import { connectRedis, redis } from "./config/redis"
@@ -6,7 +7,7 @@ import { connectRedis, redis } from "./config/redis"
 // The import below triggers that validation before anything else runs.
 import "./config/index"
 
-const PORT = parseInt(process.env.PORT ?? "3000", 10)
+const PORT = Number.parseInt(process.env.PORT ?? "3000", 10)
 
 async function start(): Promise<void> {
   // Connect to MongoDB — required, throws on failure
