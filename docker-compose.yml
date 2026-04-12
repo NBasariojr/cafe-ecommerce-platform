@@ -1,0 +1,55 @@
+# Local development infrastructure only.
+# MongoDB and Redis run in Docker.
+# Backend (Express) and Web (Vite) run on the host — NOT in containers.
+#
+# Start: make dev
+# Stop:  make down
+# Reset: make reset (destroys all data volumes)
+
+name: cafe-platform
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: cafe-mongodb
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_APP_USERNAME:         ${MONGO_APP_USERNAME}
+      MONGO_APP_PASSWORD:         ${MONGO_APP_PASSWORD}
+      MONGO_APP_DATABASE:         ${MONGO_APP_DATABASE}
+    volumes:
+      - mongo_data:/data/db
+      - ./docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet --eval 'db.adminCommand(\"ping\").ok' --username $$MONGO_INITDB_ROOT_USERNAME --password $$MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  redis:
+    image: redis:7-alpine
+    container_name: cafe-redis
+    restart: unless-stopped
+    ports:
+    - "6379:6379"
+    # appendonly yes enables AOF persistence so session/cart data
+    # survives container restarts during development.
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  mongo_data:
+    driver: local
+  redis_data:
+    driver: local
