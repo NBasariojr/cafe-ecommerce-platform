@@ -37,8 +37,6 @@ services:
     restart: unless-stopped
     ports:
     - "6379:6379"
-    # appendonly yes enables AOF persistence so session/cart data
-    # survives container restarts during development.
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
