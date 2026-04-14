@@ -1,6 +1,8 @@
 import mongoose, { Document, Model, Schema } from "mongoose"
 import bcrypt from "bcryptjs"
 import { UserRole } from "@cafe/shared"
+
+// Address sub-document interface
 export interface IAddress {
   _id?: mongoose.Types.ObjectId
   label?: string

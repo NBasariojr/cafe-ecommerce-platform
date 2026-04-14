@@ -32,7 +32,7 @@ if (!result.success) {
 }
 
 export const config = {
-  port:     parseInt(result.data.PORT, 10),
+  port:     Number.parseInt(result.data.PORT, 10),
   nodeEnv:  result.data.NODE_ENV,
   isDev:    result.data.NODE_ENV === "development",
   isProd:   result.data.NODE_ENV === "production",
