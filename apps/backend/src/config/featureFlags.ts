@@ -22,10 +22,10 @@ type FlagName = keyof typeof DEFAULT_FLAGS
 export function getFlag(flag: FlagName): boolean {
   const envKey = `FEATURE_${flag}`
   const envValue = config.nodeEnv === "production" ? process.env[envKey] : undefined
-  
+
   // If explicitly set to "false" in production env, disable it
   if (envValue === "false") return false
-  
+
   // Otherwise use the default
   return DEFAULT_FLAGS[flag]
 }
@@ -36,11 +36,11 @@ export function getFlag(flag: FlagName): boolean {
  */
 export function getAllFlags(): Record<FlagName, boolean> {
   const flags: Record<FlagName, boolean> = {} as Record<FlagName, boolean>
-  
+
   for (const flag of Object.keys(DEFAULT_FLAGS) as FlagName[]) {
     flags[flag] = getFlag(flag)
   }
-  
+
   return flags
 }
 
