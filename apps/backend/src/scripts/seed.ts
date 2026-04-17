@@ -10,7 +10,7 @@
 import mongoose from "mongoose"
 import bcrypt from "bcryptjs"
 import dotenv from "dotenv"
-import path from "path"
+import path from "node:path"
 
 // Load env vars from apps/backend/.env
 dotenv.config({ path: path.resolve(__dirname, "../../.env") })
