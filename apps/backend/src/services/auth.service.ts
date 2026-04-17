@@ -39,11 +39,11 @@ export async function register(input: RegisterInput): Promise<AuthResult> {
     lastName:  input.lastName,
   })
 
-  const tokens = generateTokens(user._id.toString(), user.email, user.role)
-  await storeRefreshToken(user._id.toString(), tokens.refreshToken)
+  const tokens = generateTokens(user._id.toHexString(), user.email, user.role)
+  await storeRefreshToken(user._id.toHexString(), tokens.refreshToken)
 
   // Cart merge stub — updated in Task 1-05 once Cart model exists.
-  // Will become: await mergeCarts(sessionId, user._id.toString())
+  // Will become: await mergeCarts(sessionId, user._id.toHexString())
 
   return {
     user:         user.toSafeObject(),
@@ -70,8 +70,8 @@ export async function login(input: LoginInput): Promise<AuthResult> {
     throw new AppError(403, "ACCOUNT_DISABLED", "This account has been disabled")
   }
 
-  const tokens = generateTokens(user._id.toString(), user.email, user.role)
-  await storeRefreshToken(user._id.toString(), tokens.refreshToken)
+  const tokens = generateTokens(user._id.toHexString(), user.email, user.role)
+  await storeRefreshToken(user._id.toHexString(), tokens.refreshToken)
 
   // Cart merge stub — updated in Task 1-05 once Cart model exists.
 
@@ -91,12 +91,7 @@ export async function login(input: LoginInput): Promise<AuthResult> {
 // invalidate all sessions for this user, forcing a re-login.
 export async function refreshTokens(incomingRefreshToken: string): Promise<RefreshResult> {
   // 1. Verify JWT signature and expiry
-  let payload: ReturnType<typeof verifyRefreshToken>
-  try {
-    payload = verifyRefreshToken(incomingRefreshToken)
-  } catch (err) {
-    throw new AppError(401, "REFRESH_TOKEN_INVALID", "Refresh token is invalid or expired")
-  }
+  const payload = verifyRefreshToken(incomingRefreshToken)
 
   const userId = payload.sub
 
@@ -124,7 +119,7 @@ export async function refreshTokens(incomingRefreshToken: string): Promise<Refre
 
   // 4. Rotate: delete old key, issue new pair, store new hash
   await redisDel(`auth:refresh:${userId}`)
-  const tokens = generateTokens(user._id.toString(), user.email, user.role)
+  const tokens = generateTokens(user._id.toHexString(), user.email, user.role)
   await storeRefreshToken(userId, tokens.refreshToken)
 
   return {

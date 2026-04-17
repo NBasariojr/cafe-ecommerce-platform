@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
 import { v4 as uuid } from "uuid"
 import { createHash } from "node:crypto"
+import { AppError } from "./AppError"
 import { jwtConfig } from "../config/jwt"
 import type { UserRole } from "@cafe/shared"
 
@@ -59,15 +60,35 @@ export function hashToken(token: string): string {
 }
 
 // Verifies an access token signature and expiry.
-// Throws jwt.JsonWebTokenError on invalid signature.
-// Throws jwt.TokenExpiredError on expiry.
+// Throws AppError with ACCESS_TOKEN_INVALID for any JWT validation failure.
 export function verifyAccessToken(token: string): AccessTokenPayload {
-  return jwt.verify(token, jwtConfig.accessSecret) as AccessTokenPayload
+  try {
+    return jwt.verify(token, jwtConfig.accessSecret) as AccessTokenPayload
+  } catch (err) {
+    if (err instanceof jwt.TokenExpiredError) {
+      throw new AppError(401, "ACCESS_TOKEN_EXPIRED", "Access token has expired")
+    }
+    if (err instanceof jwt.JsonWebTokenError) {
+      throw new AppError(401, "ACCESS_TOKEN_INVALID", "Access token is invalid")
+    }
+    throw new AppError(401, "ACCESS_TOKEN_INVALID", "Access token verification failed")
+  }
 }
 
 // Verifies a refresh token signature and expiry.
+// Throws AppError with REFRESH_TOKEN_INVALID for any JWT validation failure.
 export function verifyRefreshToken(token: string): RefreshTokenPayload {
-  return jwt.verify(token, jwtConfig.refreshSecret) as RefreshTokenPayload
+  try {
+    return jwt.verify(token, jwtConfig.refreshSecret) as RefreshTokenPayload
+  } catch (err) {
+    if (err instanceof jwt.TokenExpiredError) {
+      throw new AppError(401, "REFRESH_TOKEN_EXPIRED", "Refresh token has expired")
+    }
+    if (err instanceof jwt.JsonWebTokenError) {
+      throw new AppError(401, "REFRESH_TOKEN_INVALID", "Refresh token is invalid")
+    }
+    throw new AppError(401, "REFRESH_TOKEN_INVALID", "Refresh token verification failed")
+  }
 }
 
 // Returns the remaining lifetime of an access token in seconds.
