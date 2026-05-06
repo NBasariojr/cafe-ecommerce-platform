@@ -6,13 +6,14 @@ import cookieParser from "cookie-parser"
 import { config } from "./config/index"
 import { getMongoStatus } from "./config/database"
 import { getRedisStatus } from "./config/redis"
-import { getFlag, getAllFlags } from "./config/featureFlags"
+import { getFlag } from "./config/featureFlags"
 import { errorHandler } from "./middleware/errorHandler"
 import { notFound } from "./middleware/notFound"
 import { apiResponse } from "./utils/apiResponse"
 import { flagsRoutes } from "./routes/flags.routes"
 import { authRoutes } from "./routes/auth.routes"
 import { productRoutes } from "./routes/product.routes"
+import "./models"  // Register all models (Category, Product) with Mongoose
 
 export function createApp(): express.Application {
   const app = express()

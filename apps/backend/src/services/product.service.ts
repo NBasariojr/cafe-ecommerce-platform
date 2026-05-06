@@ -120,7 +120,7 @@ export async function getProducts(query: ProductListQuery): Promise<PaginatedPro
   ])
 
   const result: PaginatedProducts = {
-    items:      items as IProduct[],
+    items:      items as unknown as IProduct[],
     total,
     page,
     limit,

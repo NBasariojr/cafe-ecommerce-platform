@@ -5,7 +5,14 @@ import * as productService from "../services/product.service"
 
 // POST /api/products  (admin)
 export const createProduct = asyncHandler(async (req: Request, res: Response) => {
-  const product = await productService.createProduct(req.body)
+  // Map categoryId to category field for Mongoose model
+  const productData = {
+    ...req.body,
+    category: req.body.categoryId
+  }
+  delete productData.categoryId
+  
+  const product = await productService.createProduct(productData)
   res.status(201).json(apiResponse.success(product))
 })
 
@@ -24,7 +31,16 @@ export const getProductBySlug = asyncHandler(async (req: Request, res: Response)
 
 // PUT /api/products/:id  (admin)
 export const updateProduct = asyncHandler(async (req: Request, res: Response) => {
-  const product = await productService.updateProduct(req.params.id, req.body)
+  // Map categoryId to category field for Mongoose model
+  const updateData = {
+    ...req.body,
+  }
+  if (req.body.categoryId) {
+    updateData.category = req.body.categoryId
+    delete updateData.categoryId
+  }
+  
+  const product = await productService.updateProduct(req.params.id, updateData)
   res.status(200).json(apiResponse.success(product))
 })
 
